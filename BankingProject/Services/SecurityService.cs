@@ -3,8 +3,6 @@ using BankingProject.Entities;
 using BankingProject.Infrastructure;
 using BankingProject.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,11 +28,11 @@ namespace BankingProject.Services
             return userToCreate;
         }
 
-        public async Task<User> Login(LoginModel param)
+        public async Task<User> Login(string userName, string password)
         {
             var user = await Database.Users
-                .Where(x => x.UserName == param.UserName &&
-                            x.Password == param.Password)
+                .Where(x => x.UserName == userName &&
+                            x.Password == password)
                 .FirstOrDefaultAsync();
 
             return user;
@@ -44,6 +42,6 @@ namespace BankingProject.Services
     public interface ISecurityService : IService
     {
         Task<User> CreateUserAsync(RegisterModel parameter);
-        Task<User> Login(LoginModel param);
+        Task<User> Login(string userName, string password);
     }
 }
