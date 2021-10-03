@@ -18,7 +18,7 @@ namespace BankingProject.Services
         {
             var userToCreate = new User
             {
-                UserName = parameter.UserName,
+                Correo = parameter.UserName,
                 Password = parameter.Password
             };
 
@@ -31,7 +31,7 @@ namespace BankingProject.Services
         public async Task<User> Login(string userName, string password)
         {
             var user = await Database.Users
-                .Where(x => x.UserName == userName &&
+                .Where(x => x.Correo == userName &&
                             x.Password == password)
                 .FirstOrDefaultAsync();
 

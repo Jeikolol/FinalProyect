@@ -48,8 +48,8 @@ namespace BankingProject.Controllers
                 {
                     var claims = new[] 
                     { 
-                        new Claim(ClaimTypes.Name, result.UserName),
-                        new Claim(ClaimTypes.Email, result.UserName),
+                        new Claim(ClaimTypes.Name, result.Correo),
+                        new Claim(ClaimTypes.Email, result.Correo),
                     };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -99,7 +99,7 @@ namespace BankingProject.Controllers
                 {
                     var login = new LoginModel
                     {
-                        UserName = result.UserName,
+                        UserName = result.Correo,
                         Password = result.Password
                     };
 
