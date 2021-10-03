@@ -9,15 +9,8 @@ namespace BankingProject.core.Entities
     public class Transaccion
     {
         public long Id { get; set; }
-
-        //public Cuenta CuentaOrigenId { get; set; }
-        //public Cuenta CuentaDestinoId { get; set; }
-
         public decimal Balance { get; set; }
-
         public DateTime Fecha { get; set; }
         public bool Estado { get; set; }
-
-
     }
 }   
