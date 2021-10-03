@@ -1,4 +1,5 @@
-﻿using BankingProject.Entities;
+﻿using BankingProject.core.Entities;
+using BankingProject.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankingProject.Data
@@ -15,8 +16,15 @@ namespace BankingProject.Data
             base.OnModelCreating(builder);
 
             builder.Entity<User>().ToTable("Users");
-       }
+            builder.Entity<Cuenta>().ToTable("Cuentas");
+            builder.Entity<Transaccion>().ToTable("Transacciones");
+        }
 
        public DbSet<User> Users { get; set; }
+      
+       public DbSet<Cuenta> Cuentas { get; set; }
+
+       public DbSet<Transaccion> Transacciones { get; set; }
+
     }
 }

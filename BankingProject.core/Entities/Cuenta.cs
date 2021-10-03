@@ -13,7 +13,7 @@ namespace BankingProject.core.Entities
 
         public string NumeroCuenta  { get; set; }
         public decimal Balace { get; set; }
-        public User UserId { get; set; }
+        //public User UserId { get; set; }
         public DateTime FechaCreacion { get; set; }
         public bool Activo { get; set; }
 
