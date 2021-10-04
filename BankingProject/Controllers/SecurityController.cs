@@ -1,10 +1,8 @@
-﻿using BankingProject.Entities;
-using BankingProject.Models;
+﻿using BankingProject.Models;
 using BankingProject.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
@@ -44,14 +42,14 @@ namespace BankingProject.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _securityService.Login(param);
+                var result = await _securityService.Login(param.UserName, param.Password);
 
                 if (result != null)
                 {
                     var claims = new[] 
                     { 
-                        new Claim(ClaimTypes.Name, result.UserName),
-                        new Claim(ClaimTypes.Email, result.UserName),
+                        new Claim(ClaimTypes.Name, result.Correo),
+                        new Claim(ClaimTypes.Email, result.Correo),
                     };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -101,13 +99,13 @@ namespace BankingProject.Controllers
                 {
                     var login = new LoginModel
                     {
-                        UserName = result.UserName,
+                        UserName = result.Correo,
                         Password = result.Password
                     };
 
                     _logger.LogInformation("Usuario creado.");
 
-                    await _securityService.Login(login);
+                    await _securityService.Login(login.UserName, login.Password);
                     return LocalRedirect(returnUrl);
                 }
             }
