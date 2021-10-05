@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
@@ -36,13 +37,13 @@
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.ReturnUrl)
                     <div class="input-group mb-3">
-                        <input asp-for="UserName" class="form-control" placeholder="Usuario" name="UserName" type="text">
+                        <input asp-for="Email" class="form-control" placeholder="Email" name="Email" type="email">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-user"></span>
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
                         <input asp-for="Password" class="form-control" placeholder="********" name="Password" type="password">
@@ -57,16 +58,16 @@
                         <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
                         @Html.ValidationSummary()
                         @*<div class="col-8">
-                    <div class="icheck-primary">
-                        <input type="checkbox" asp-for="RememberMe">
-                        <label asp-for="RememberMe">
-                            @Html.DisplayNameFor(m => m.RememberMe)
-                        </label>
-                    </div>
-                </div>*@
+                                <div class="icheck-primary">
+                                    <input type="checkbox" asp-for="RememberMe">
+                                    <label asp-for="RememberMe">
+                                        @Html.DisplayNameFor(m => m.RememberMe)
+                                    </label>
+                                </div>
+                            </div>*@
                         <!-- /.col -->
                         @*<div class="col-4">
-                        </div>*@
+                            </div>*@
                         <!-- /.col -->
                     </div>
                 </form>
@@ -85,5 +86,13 @@
     <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/js/adminlte.min.js"></script>
+    <script src="/plugins/toastr/toastr.min.js"></script>
+    <script type="text/javascript">
+        var msg = @(TempData["Message"]!=null? Html.Raw(TempData["Message"]) : Html.Raw("undefined"));
+
+        if (msg != null) {
+            toastr[msg.type](msg.message, msg.title);
+        }
+    </script>
 </body>
 </html>

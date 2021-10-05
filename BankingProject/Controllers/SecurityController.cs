@@ -1,24 +1,21 @@
-﻿using BankingProject.Models;
+﻿using BankingProject.Helpers;
+using BankingProject.Models;
 using BankingProject.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BankingProject.Controllers
 {
-    public class SecurityController : Controller
+    public class SecurityController : BaseController
     {
-        private readonly ILogger<SecurityController> _logger;
         private readonly ISecurityService _securityService;
 
-        public SecurityController(ILogger<SecurityController> logger,
-            ISecurityService securityService)
+        public SecurityController(ISecurityService securityService)
         {
-            _logger = logger;
             _securityService = securityService;
         }
 
@@ -40,9 +37,30 @@ namespace BankingProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _securityService.Login(param.UserName, param.Password);
+                var result = await _securityService.Login(param.Email, param.Password);
+
+                if (!result.Activo)
+                {
+                    ShowNotification("La Cuenta Esta Inactiva, Contactar con Soporte.", "Mantenimiento de Usuarios", NotificationType.error);
+                    return View();
+                }
+                
+                if (result == null)
+                {
+                    ShowNotification("Usuario o contraseña invalido.", "Mantenimiento de Usuarios", NotificationType.error);
+                    return View();
+                }
+
+                if (!ValidarPassword.Validar(result.Password, param.Password))
+                {
+                    if (result.Intentos < result.IntentosMaximos)
+                    {
+                        await _securityService.IncrementarIntentosYChequearIntentosMaximos(result, param.Password, result.IntentosMaximos);
+                    }
+
+                    ShowNotification("Usuario o contraseña invalido.", "Mantenimiento de Usuarios", NotificationType.error);
+                    return View();
+                }
 
                 if (result != null)
                 {
@@ -57,27 +75,13 @@ namespace BankingProject.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
                                                     new ClaimsPrincipal(identity), 
                                                     new AuthenticationProperties { IsPersistent = true});
+                    
+                    await _securityService.ResetearIntentosDeUsuario(result);
 
-                    _logger.LogInformation("Usuario logeado.");
                     return RedirectToAction("Index", "Home");
-                }
-                //if (result.RequiresTwoFactor)
-                //{
-                //    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                //}
-                //if (result.IsLockedOut)
-                //{
-                //    _logger.LogWarning("Usuario bloqueado.");
-                //    return RedirectToPage("./Lockout");
-                //}
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Usuario o contraseña invalido.");
-                    return View();
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return View();
         }
 
@@ -97,21 +101,22 @@ namespace BankingProject.Controllers
 
                 if (result != null)
                 {
-                    var login = new LoginModel
-                    {
-                        UserName = result.Correo,
-                        Password = result.Password
-                    };
+                    ShowNotification("Usuario Creado Correctamente", "Mantenimiento de Usuarios", NotificationType.success);
 
-                    _logger.LogInformation("Usuario creado.");
-
-                    await _securityService.Login(login.UserName, login.Password);
                     return LocalRedirect(returnUrl);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
+
+            return RedirectToAction("Login", "Security");
         }
     }
 }
