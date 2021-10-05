@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankingProject.core.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BankingProject.Entities
@@ -10,6 +11,7 @@ namespace BankingProject.Entities
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Correo { get; set; }
+        public Cuenta Cuenta { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }

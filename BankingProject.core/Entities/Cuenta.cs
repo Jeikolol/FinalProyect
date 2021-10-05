@@ -1,5 +1,6 @@
 ﻿using BankingProject.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BankingProject.core.Entities
@@ -13,6 +14,7 @@ namespace BankingProject.core.Entities
         public string NumeroCuenta  { get; set; }        
         public int? UserId { get; set; }
         public User User { get; set; }
+        public List<Transaccion> Transacciones { get; set; }
         [DataType(DataType.Currency)]
         public decimal Balace { get; set; }
         [DataType(DataType.Date)]

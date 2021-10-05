@@ -8,7 +8,7 @@ namespace BankingProject.core.Entities
         [Key]
         public long Id { get; set; }
         public long? CuentaId { get; set; }
-        public Cuenta Cuenta { get; set; }        
+        public Cuenta Cuenta { get; set; }            
         [Required(ErrorMessage ="El balance es requerido")]
         public decimal Balance { get; set; }
         [DataType(DataType.DateTime)]
