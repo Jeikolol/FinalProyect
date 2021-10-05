@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingProject.core", "Bank
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingProject.data", "BankingProject.data\BankingProject.data.csproj", "{31142469-5BFD-4398-9430-69A9CE7C38F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppServices", "AppServices\AppServices.csproj", "{EA4EBD3F-FB50-4B03-8928-039DFFF7B801}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppServices", "AppServices\AppServices.csproj", "{EA4EBD3F-FB50-4B03-8928-039DFFF7B801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingProjectFinal", "BankingProjectFinal\BankingProjectFinal.csproj", "{5D736659-1EE8-418A-B2D1-699CCD29350A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EA4EBD3F-FB50-4B03-8928-039DFFF7B801}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA4EBD3F-FB50-4B03-8928-039DFFF7B801}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA4EBD3F-FB50-4B03-8928-039DFFF7B801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D736659-1EE8-418A-B2D1-699CCD29350A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D736659-1EE8-418A-B2D1-699CCD29350A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D736659-1EE8-418A-B2D1-699CCD29350A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D736659-1EE8-418A-B2D1-699CCD29350A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
