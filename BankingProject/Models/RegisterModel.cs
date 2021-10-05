@@ -13,11 +13,13 @@ namespace BankingProject.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
-        [Required]
-        [Display(Name = "Usuario")]
-        public string UserName { get; set; }
-
+        public string Nombre { get; set; }
+        [Required(ErrorMessage = "El apellido es requerido")]
+        [MaxLength(20, ErrorMessage = "El apellido no puede tener mas de 20 caracteres")]
+        public string Apellido { get; set; }
+        [Required(ErrorMessage = "La cedula es requerida")]
+        [RegularExpression(@"\d{11}")]
+        public string Cedula { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
