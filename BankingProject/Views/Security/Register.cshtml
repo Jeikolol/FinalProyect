@@ -30,13 +30,31 @@
 
                 <form action="/Security/Register" method="post">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" asp-for="UserName" placeholder="Nombre de Usuario">
+                        <input type="text" class="form-control" asp-for="Nombre" placeholder="Nombre">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>  
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" asp-for="Apellido" placeholder="Apellido">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Apellido" class="text-danger"></span>
+                    </div> 
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" asp-for="Cedula" placeholder="Cedula">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-id-card"></span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Cedula" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" asp-for="Email" placeholder="Email">

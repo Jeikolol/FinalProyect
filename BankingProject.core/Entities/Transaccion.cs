@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankingProject.core.Entities
 {
@@ -11,8 +7,8 @@ namespace BankingProject.core.Entities
     {
         [Key]
         public long Id { get; set; }
-        public Cuenta Cuenta { get; set; }        
         public long? CuentaId { get; set; }
+        public Cuenta Cuenta { get; set; }        
         [Required(ErrorMessage ="El balance es requerido")]
         public decimal Balance { get; set; }
         [DataType(DataType.DateTime)]

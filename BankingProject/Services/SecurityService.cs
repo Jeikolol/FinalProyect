@@ -1,10 +1,16 @@
 ﻿using BankingProject.Data;
 using BankingProject.Entities;
+using BankingProject.Helpers;
 using BankingProject.Infrastructure;
 using BankingProject.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BankingProject.Services
 {
@@ -18,8 +24,13 @@ namespace BankingProject.Services
         {
             var userToCreate = new User
             {
-                Correo = parameter.UserName,
-                Password = parameter.Password
+                Correo = parameter.Email,
+                Password = parameter.Password,
+                Nombre = parameter.Nombre,
+                Apellido = parameter.Apellido,
+                Cedula = parameter.Cedula,
+                FechaCreacion = DateTime.UtcNow,
+                Activo = true
             };
 
             Database.Add(userToCreate);
@@ -28,14 +39,47 @@ namespace BankingProject.Services
             return userToCreate;
         }
 
-        public async Task<User> Login(string userName, string password)
+        public async Task<User> Login(string email, string password)
         {
             var user = await Database.Users
-                .Where(x => x.Correo == userName &&
-                            x.Password == password)
+                .Where(x => x.Correo == email)
                 .FirstOrDefaultAsync();
 
             return user;
+        }
+
+        public async Task IncrementarIntentosYChequearIntentosMaximos(User user, string passsword, int intentoMaximo)
+        {
+            var usuarioParaActualizar = await Database.Users
+                .Where(x => x.Id == user.Id)
+                .FirstOrDefaultAsync();
+
+            usuarioParaActualizar.Intentos++;
+
+            if (usuarioParaActualizar.Intentos > intentoMaximo)
+            {
+                usuarioParaActualizar.Activo = false;
+            }
+
+            Database.Update(usuarioParaActualizar);
+
+            await Database.SaveChangesAsync();
+        }
+
+        public async Task ResetearIntentosDeUsuario(User user)
+        {
+            if (user.Intentos > 0)
+            {
+                var usuarioParaActualizar = await Database.Users
+                    .Where(x => x.Id == user.Id)
+                    .FirstOrDefaultAsync();
+
+                user.Intentos = 0;
+                usuarioParaActualizar.Intentos = 0;
+
+                Database.Update(usuarioParaActualizar);
+                await Database.SaveChangesAsync();
+            }
         }
     }
 
@@ -43,5 +87,7 @@ namespace BankingProject.Services
     {
         Task<User> CreateUserAsync(RegisterModel parameter);
         Task<User> Login(string userName, string password);
+        Task IncrementarIntentosYChequearIntentosMaximos(User user, string passsword, int intentoMaximo);
+        Task ResetearIntentosDeUsuario(User user);
     }
 }
