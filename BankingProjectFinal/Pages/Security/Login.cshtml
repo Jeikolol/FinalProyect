@@ -35,26 +35,26 @@
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.Login.ReturnUrl)
                     <div class="input-group mb-3">
-                        <input asp-for="Login.Email" class="form-control" placeholder="Email" name="Email" type="email">
+                        @Html.TextBoxFor(m => m.Login.Email, new { @type = "email", @class = "form-control", @placeholder = "Correo" })
+                        @*<input asp-for="Login.Email" class="form-control" placeholder="Email" name="Email" type="email">*@
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="Login.Email" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
-                        <input asp-for="Login.Password" class="form-control" placeholder="********" name="Password" type="password">
+                        @Html.PasswordFor(m => m.Login.Password, new { @class="form-control", @placeholder="********", @type="password" })
+                        @*<input asp-for="Login.Password" class="form-control" placeholder="********" name="Password" type="password">*@
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="Login.Password" class="text-danger"></span>
                     </div>
                     <div class="input-group">
                         <button type="submit" class="btn btn-primary btn-block" asp-page-handler="Login">Iniciar sesión</button>
-                        @Html.ValidationSummary()
+                       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @*<div class="col-8">
                                 <div class="icheck-primary">
                                     <input type="checkbox" asp-for="RememberMe">

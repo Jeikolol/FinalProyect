@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace BankingProjectFinal.Pages
 {
@@ -17,6 +20,13 @@ namespace BankingProjectFinal.Pages
         public void OnGet()
         {
 
+        }
+        
+        public async Task<IActionResult> OnPostLogOut()
+        {
+            await HttpContext.SignOutAsync();
+
+            return RedirectToPage("Login", "Login");
         }
     }
 }

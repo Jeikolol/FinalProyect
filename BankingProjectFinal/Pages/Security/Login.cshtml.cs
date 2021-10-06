@@ -22,6 +22,7 @@ namespace BankingProjectFinal.Pages.Security
             _securityService = securityService;
         }
 
+        [BindProperty]
         public LoginViewModel Login { get; set; }
 
         public IActionResult OnGet()
@@ -30,7 +31,7 @@ namespace BankingProjectFinal.Pages.Security
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    return this.RedirectToPage("/Home/Index");
+                    return this.RedirectToPage("../Index");
                 }
             }
             catch (Exception ex)
@@ -91,18 +92,12 @@ namespace BankingProjectFinal.Pages.Security
 
                     await _securityService.ResetearIntentosDeUsuario(result);
 
-                    return RedirectToPage("Index", "Index");
+                    return RedirectToPage("../Index");
                 }
             }
 
-            return Page();;
+            return Page();
         }
         
-        public async Task<ActionResult> OnPostLogOut()
-        {
-            await HttpContext.SignOutAsync();
-
-            return RedirectToPage("Login", "Login");
-        }
     }
 }

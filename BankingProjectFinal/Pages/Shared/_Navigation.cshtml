@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using BankingProject.core.Entities
 
-
 @if (User.Identity.IsAuthenticated)
 {
     <!-- Main Sidebar Container -->
@@ -103,7 +102,7 @@
         </div>
         <!-- /.sidebar -->
         <div class="sidebar-custom">
-            @using (Html.BeginForm("LogOut", "Security", FormMethod.Post, new { id = "logoutForm", name = "logoutForm" }))
+            @using (Html.BeginForm("LogOut", "Shared", FormMethod.Post, new { id = "logoutForm", name = "logoutForm" }))
             {
                 @Html.AntiForgeryToken()
             }
