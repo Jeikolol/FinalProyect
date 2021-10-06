@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingProject.data", "Bank
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppServices", "AppServices\AppServices.csproj", "{EA4EBD3F-FB50-4B03-8928-039DFFF7B801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingProjectFinal", "BankingProjectFinal\BankingProjectFinal.csproj", "{5D736659-1EE8-418A-B2D1-699CCD29350A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingProjectFinal", "BankingProjectFinal\BankingProjectFinal.csproj", "{5D736659-1EE8-418A-B2D1-699CCD29350A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

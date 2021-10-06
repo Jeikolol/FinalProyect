@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BankingProjectFinal.Pages
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -20,6 +20,13 @@ namespace BankingProjectFinal.Pages
         public void OnGet()
         {
 
+        }
+        
+        public async Task<IActionResult> OnPostLogOut()
+        {
+            await HttpContext.SignOutAsync();
+
+            return RedirectToPage("Login", "Login");
         }
     }
 }
