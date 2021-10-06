@@ -1,6 +1,17 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.table-striped-even-light-blue > tbody tr:nth-of-type(even) {
+    background-color: #1ce32b38;
+}
+
+.table-striped-even-light-blue > thead > tr {
+    background-color: white;
+    color: #1ab394;
+    border-bottom: 2px solid;
+    border-top: 2px solid;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -16,6 +27,12 @@ a {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.btn-white {
+    color: black !important;
+    background-color: white !important;
+    border-color: white !important;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {

@@ -1,6 +1,9 @@
-using BankingProjectFinal.Data;
+using Autofac;
+using BankingProject.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -30,10 +33,44 @@ namespace BankingProjectFinal
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Security/Login");
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
+            });
+
+            services.AddAuthorization();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                options.Cookie.MaxAge = TimeSpan.FromDays(7);
+            });
+
+            services.AddRazorPages()
+                    .AddRazorPagesOptions(options =>
+                    {
+                        options.Conventions.AuthorizeFolder("/");
+                        options.Conventions.AllowAnonymousToPage("/Login");
+                    });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new ServiceModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +87,13 @@ namespace BankingProjectFinal
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            var cookiePolicyOptions = new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+            };
+
+            app.UseCookiePolicy(cookiePolicyOptions);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
