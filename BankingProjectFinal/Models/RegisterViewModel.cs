@@ -31,5 +31,13 @@ namespace BankingProjectFinal.Models
 
         [TempData]
         public string ErrorMessage { get; set; }
+
+        [Required]
+        public string Direccion { get; set; }
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        public string Telefono { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        public string Celular { get; set; }
     }
 }
