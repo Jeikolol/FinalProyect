@@ -2,7 +2,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BankingProject.core.Entities;
 using BankingProject.Services;
+using BankingProjectFinal.Helpers;
 using BankingProjectFinal.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace BankingProjectFinal.Pages.Security
 {
     [AllowAnonymous]
-    public class LoginModel : PageModel
+    public class LoginModel : BaseModel
     {
         private readonly ISecurityService _securityService;
 
@@ -47,34 +49,34 @@ namespace BankingProjectFinal.Pages.Security
         {
             if (User.Identity.IsAuthenticated)
             {
-                //return RedirectToAction("Index", "Home");
+                return RedirectToPage("../Index");
             }
             if (ModelState.IsValid)
             {
-                var result = await _securityService.Login(this.Login.Email, this.Login.Password);
+                var result = await _securityService.Login(this.Login.Email);
 
-                //if (!result.Activo)
-                //{
-                //    ShowNotification("La Cuenta Esta Inactiva, Contactar con Soporte.", "Mantenimiento de Usuarios", NotificationType.error);
-                //    return View();
-                //}
+                if (!result.Activo)
+                {
+                    ShowNotification("La Cuenta Esta Inactiva, Contactar con Soporte.", "Mantenimiento de Usuarios", NotificationType.error);
+                    return Page();
+                }
 
-                //if (result == null)
-                //{
-                //    ShowNotification("Usuario o contraseña invalido.", "Mantenimiento de Usuarios", NotificationType.error);
-                //    return View();
-                //}
+                if (result == null)
+                {
+                    ShowNotification("Usuario o contraseña invalido.", "Mantenimiento de Usuarios", NotificationType.error);
+                    return Page();
+                }
 
-                //if (!ValidarPassword.Validar(result.Password, param.Password))
-                //{
-                //    if (result.Intentos < result.IntentosMaximos)
-                //    {
-                //        await _securityService.IncrementarIntentosYChequearIntentosMaximos(result, param.Password, result.IntentosMaximos);
-                //    }
+                if (!ValidarHelper.ValidarPassword(result.Password, result.Password))
+                {
+                    if (result.Intentos < result.IntentosMaximos)
+                    {
+                        await _securityService.IncrementarIntentosYChequearIntentosMaximos(result, result.Password, result.IntentosMaximos);
+                    }
 
-                //    ShowNotification("Usuario o contraseña invalido.", "Mantenimiento de Usuarios", NotificationType.error);
-                //    return View();
-                //}
+                    ShowNotification("Usuario o contraseña invalido.", "Mantenimiento de Usuarios", NotificationType.error);
+                    return Page();
+                }
 
                 if (result != null)
                 {

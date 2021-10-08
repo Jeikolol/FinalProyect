@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using BankingProject.core.Entities;
 using BankingProject.Services;
+using BankingProjectFinal.Helpers;
 using BankingProjectFinal.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,12 @@ namespace BankingProjectFinal.Pages.Security
         {
             if (ModelState.IsValid)
             {
+                if (!ValidarHelper.ValidarCedula(this.Register.Cedula))
+                {
+                    ShowNotification("La Cedula Ingresada es Invalida.", "Mantenimiento de Usuarios", NotificationType.error);
+                    return Page();
+                }
+
                 var result = await _securityService.CreateUserAsync(this.Register);
 
                 if (result != null)

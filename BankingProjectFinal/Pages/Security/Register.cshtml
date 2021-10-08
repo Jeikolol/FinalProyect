@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
 </head>
 <body class="hold-transition register-page">
     <div class="register-box">
@@ -31,7 +32,7 @@
 
                 <form method="post">
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Register.Nombre, new { @type = "text", @class="form-control", @placeholder="Nombre" })
+                        @Html.TextBoxFor(m => m.Register.Nombre, new { @type = "text", @class = "form-control", @placeholder = "Nombre" })
                         @*<input asp-for="Register.Nombre" type="text" class="form-control" placeholder="Nombre">*@
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -103,6 +104,14 @@
     <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/js/adminlte.min.js"></script>
+    <script src="/plugins/toastr/toastr.min.js"></script>
+    <script type="text/javascript">
+        var msg = @(TempData["Message"]!=null? Html.Raw(TempData["Message"]) : Html.Raw("undefined"));
+
+        if (msg != null) {
+            toastr[msg.type](msg.message, msg.title);
+        }
+    </script>
 </body>
 </html>
 
