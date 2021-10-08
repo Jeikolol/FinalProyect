@@ -1,5 +1,6 @@
 ﻿using BankingProject.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BankingProject.data.Repository
 {
@@ -10,32 +11,35 @@ namespace BankingProject.data.Repository
         {
             this._dbContext = dbContext;
         }
-        public T Delete(T entity)
+        public T Eliminar(T entidad)
         {
-            throw new System.NotImplementedException();
+            var entidadActualizada = _dbContext.Set<T>().Remove(entidad);
+            _dbContext.SaveChanges();
+            return entidadActualizada.Entity;
         }
 
-        public List<T> Get(int id)
+        public List<T> Obtener()
         {
-            throw new System.NotImplementedException();
+            return _dbContext.Set<T>().ToList();
         }
 
-        public T GetDetail(int id)
+        public T ObtenerDetalle(int id)
         {
             return this._dbContext.Set<T>().Find(id);
         }
 
-        public T Insert(T entity)
+        public T Agregar(T entidad)
         {
-            this._dbContext.Set<T>().Add(entity);
-            this._dbContext.SaveChanges();
-
-            throw new System.NotImplementedException();
+            var entidadInsertada = _dbContext.Set<T>().Add(entidad);
+            _dbContext.SaveChanges();
+            return entidadInsertada.Entity;
         }
 
-        public T Update(T entity)
+        public T Actualizar(T entidad)
         {
-            throw new System.NotImplementedException();
+            var entidadActualizada= _dbContext.Set<T>().Update(entidad);
+            _dbContext.SaveChanges();
+            return entidadActualizada.Entity;
         }
     }
 }

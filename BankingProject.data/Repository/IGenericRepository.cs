@@ -8,10 +8,10 @@ namespace BankingProject.data.Repository
 {
     interface IGenericRepository<T> where T:class
     {
-        List<T> Get(int id);
-        T GetDetail(int id);
-        T Update(T entity);
-        T Delete(T entity);
-        T Insert(T entity);
+        List<T> Obtener();
+        T ObtenerDetalle(int id);
+        T Actualizar(T entidad);
+        T Eliminar(T entidad);
+        T Agregar(T entidad);
     }
 }
