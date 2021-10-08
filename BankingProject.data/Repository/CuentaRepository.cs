@@ -8,7 +8,7 @@ namespace BankingProject.data.Repository
     public class CuentaRepository:GenericRepository<Cuenta>,ICuentaRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        List<Cuenta> cuentas = new List<Cuenta>();
+        
         public CuentaRepository(ApplicationDbContext dbContext):base(dbContext)
         {
             _dbContext = dbContext;
