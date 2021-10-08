@@ -65,6 +65,11 @@ namespace BankingProjectFinal
                         options.Conventions.AuthorizeFolder("/");
                         options.Conventions.AllowAnonymousToPage("/Login");
                     });
+            //Inyeccion de los repositorios
+
+            services.AddSingleton<UserRepository>();
+            services.AddSingleton<TransactionRepository>();
+            services.AddSingleton<CuentaRepository>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
