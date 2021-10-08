@@ -29,6 +29,9 @@ namespace BankingProject.Services
                 Nombre = parameter.Nombre,
                 Apellido = parameter.Apellido,
                 Cedula = parameter.Cedula,
+                Direccion = parameter.Direccion,
+                Telefono = parameter.Telefono,
+                Celular = parameter.Celular,
                 FechaCreacion = DateTime.UtcNow,
                 Activo = true
             };
