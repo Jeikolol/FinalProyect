@@ -44,6 +44,7 @@ namespace BankingProject.Data
         public DbSet<Cuenta> Cuentas { get; set; }
 
         public DbSet<Transaccion> Transacciones { get; set; }
+        public DbSet<Transferencia> Transferencias { get; set; }
 
     }
 }

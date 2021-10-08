@@ -1,0 +1,23 @@
+﻿@page
+@model BankingProjectFinal.Pages.Transferencias.TransferenciaModel
+@{
+}
+
+<h1 class="text-center my-5">Transferencias</h1>
+
+<div class="row d-flex justify-content-center">
+    <div class="col-6">
+        <form method="get">
+            <label>Cuenta origen:</label>
+            <input type="text" name="cuentaOrigen" class="form-control" />
+            <label>Cuenta destino:</label>
+            <input type="text" name="cuentaDestino" class="form-control" />
+            <label>Monto a pagar:</label>
+            <input type="text" name="montoAPagar" class="form-control" />
+            <label>Concepto:</label>
+            <textarea class="form-control" name="concepto"></textarea>
+            <input type="submit" value="Tranferir" class="btn btn-primary my-2" />
+        </form>
+    </div>
+</div>
+
