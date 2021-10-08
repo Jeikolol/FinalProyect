@@ -2272,4 +2272,9 @@
     <ProjectReference Include="..\BankingProject.data\BankingProject.data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AppServices\AppServices.csproj" />
+    <ProjectReference Include="..\BankingProject.data\BankingProject.data.csproj" />
+  </ItemGroup>
+
 </Project>

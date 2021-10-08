@@ -53,9 +53,4 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AppServices\AppServices.csproj" />
-    <ProjectReference Include="..\BankingProject.core\BankingProject.core.csproj" />
-  </ItemGroup>
-
 </Project>
