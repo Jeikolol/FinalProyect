@@ -39,7 +39,7 @@ namespace BankingProject.Services
             return userToCreate;
         }
 
-        public async Task<User> Login(string email, string password)
+        public async Task<User> Login(string email)
         {
             var user = await Database.Users
                 .Where(x => x.Correo == email)
@@ -86,7 +86,7 @@ namespace BankingProject.Services
     public interface ISecurityService : IService
     {
         Task<User> CreateUserAsync(RegisterViewModel parameter);
-        Task<User> Login(string userName, string password);
+        Task<User> Login(string userName);
         Task IncrementarIntentosYChequearIntentosMaximos(User user, string passsword, int intentoMaximo);
         Task ResetearIntentosDeUsuario(User user);
     }

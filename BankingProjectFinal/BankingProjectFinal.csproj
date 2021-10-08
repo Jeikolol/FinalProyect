@@ -2273,7 +2273,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <ProjectReference Include="..\AppServices\AppServices.csproj" />
+    <ProjectReference Include="..\BankingProject.data\BankingProject.data.csproj" />
   </ItemGroup>
 
 </Project>

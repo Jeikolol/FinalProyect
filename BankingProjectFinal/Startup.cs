@@ -6,15 +6,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BankingProject.data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BankingProjectFinal
 {
@@ -66,6 +65,11 @@ namespace BankingProjectFinal
                         options.Conventions.AuthorizeFolder("/");
                         options.Conventions.AllowAnonymousToPage("/Login");
                     });
+            //Inyeccion de los repositorios
+
+            services.AddSingleton<UserRepository>();
+            services.AddSingleton<TransactionRepository>();
+            services.AddSingleton<CuentaRepository>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
