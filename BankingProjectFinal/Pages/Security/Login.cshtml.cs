@@ -84,6 +84,7 @@ namespace BankingProjectFinal.Pages.Security
                     {
                         new Claim(ClaimTypes.Name, result.Correo),
                         new Claim(ClaimTypes.Email, result.Correo),
+                        new Claim(ClaimTypes.UserData,result.Id.ToString())
                     };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

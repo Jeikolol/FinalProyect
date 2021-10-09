@@ -10,5 +10,6 @@ namespace BankingProject.data.Repository
     interface ICuentaRepository:IGenericRepository<Cuenta>
     {
         Cuenta ObtenerPorNumeroCuenta(string numeroCuenta);
+        List<Cuenta> ObtenerPorUsuario(int UserId);
     }
 }

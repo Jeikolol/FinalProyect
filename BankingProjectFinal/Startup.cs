@@ -14,6 +14,7 @@ using BankingProject.data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppServices;
 
 namespace BankingProjectFinal
 {
@@ -48,7 +49,7 @@ namespace BankingProjectFinal
             });
 
             services.AddAuthorization();
-
+            services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -70,6 +71,9 @@ namespace BankingProjectFinal
             services.AddSingleton<UserRepository>();
             services.AddSingleton<TransactionRepository>();
             services.AddSingleton<CuentaRepository>();
+
+            //Servicios
+            services.AddSingleton<CuentaService>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
