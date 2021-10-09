@@ -178,7 +178,7 @@ namespace BankingProject.Migrations
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
-                    b.Navigation("Transaccione");
+                    b.Navigation("Transacciones");
                 });
 #pragma warning restore 612, 618
         }

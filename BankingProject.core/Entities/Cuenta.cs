@@ -13,7 +13,7 @@ namespace BankingProject.core.Entities
         [RegularExpression(@"\d{10}")]
         public string NumeroCuenta  { get; set; }        
         //public int? UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public List<Transaccion> Transacciones { get; set; }
         [DataType(DataType.Currency)]
         public decimal Balace { get; set; }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211009033442_fix foreing key")]
+    [Migration("20211009040444_fix foreing key")]
     partial class fixforeingkey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,12 +112,12 @@ namespace BankingProject.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int?>("UserIdId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserIdId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Cuentas");
                 });
@@ -137,7 +137,7 @@ namespace BankingProject.Migrations
                     b.Property<string>("Comentario")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CuentaIdId")
+                    b.Property<long?>("CuentaId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("Estado")
@@ -150,32 +150,32 @@ namespace BankingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CuentaIdId");
+                    b.HasIndex("CuentaId");
 
                     b.ToTable("Transacciones");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
-                    b.HasOne("BankingProject.Entities.User", "UserId")
-                        .WithMany("CuentaId")
-                        .HasForeignKey("UserIdId");
+                    b.HasOne("BankingProject.Entities.User", "User")
+                        .WithMany("Cuenta")
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("UserId");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Transaccion", b =>
                 {
-                    b.HasOne("BankingProject.core.Entities.Cuenta", "CuentaId")
+                    b.HasOne("BankingProject.core.Entities.Cuenta", "Cuenta")
                         .WithMany("Transacciones")
-                        .HasForeignKey("CuentaIdId");
+                        .HasForeignKey("CuentaId");
 
-                    b.Navigation("CuentaId");
+                    b.Navigation("Cuenta");
                 });
 
             modelBuilder.Entity("BankingProject.Entities.User", b =>
                 {
-                    b.Navigation("CuentaId");
+                    b.Navigation("Cuenta");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
