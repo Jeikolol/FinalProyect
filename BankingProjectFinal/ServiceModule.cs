@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using BankingProject.Infrastructure;
 using BankingProject.Services;
+using BankingProjectFinal.Services;
 
 namespace BankingProjectFinal
 {
@@ -12,6 +13,9 @@ namespace BankingProjectFinal
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<SecurityService>().As<ISecurityService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<TransferenciaService>().As<ITransferenciaService>()
                 .InstancePerLifetimeScope();
         }
     }

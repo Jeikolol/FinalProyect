@@ -1,0 +1,33 @@
+﻿@page
+@model BankingProjectFinal.Pages.Transferencias.TransferenciaModel
+@{
+}
+
+<h1 class="text-center my-5">Transferencias a cuentas propias</h1>
+
+<div class="row d-flex justify-content-center">
+    <div class="col-6">
+        <form method="POST">
+            @Html.LabelFor(m => m.Transferencia.CuentaOrigen, new { @class = "control-label" }):
+            @Html.TextBoxFor(m => m.Transferencia.CuentaOrigen, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Transferencia.CuentaDestino, new { @class = "control-label" }):
+            @Html.TextBoxFor(m => m.Transferencia.CuentaDestino, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Transferencia.Monto, new { @class = "control-label" }):
+            @Html.TextBoxFor(m => m.Transferencia.Monto, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Transferencia.Concepto, new { @class = "control-label" }):
+            @Html.TextAreaFor(m => m.Transferencia.Concepto, new { @class = "form-control" })
+            <!--
+            <label>Cuenta origen:</label>
+            <input type="text" name="cuentaOrigen" class="form-control" />
+            <label>Cuenta destino:</label>
+            <input type="text" name="cuentaDestino" class="form-control" />
+            <label>Monto a pagar:</label>
+            <input type="text" name="montoAPagar" class="form-control" />
+            <label>Concepto:</label>
+            <textarea class="form-control" name="concepto"></textarea>
+            -->
+            <input type="submit" value="Tranferir" asp-page-handler="Transferir" class="btn btn-primary my-2" />
+        </form>
+    </div>
+</div>
+

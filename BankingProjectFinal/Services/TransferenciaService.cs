@@ -1,6 +1,7 @@
 ﻿using BankingProject.core.Entities;
 using BankingProject.Data;
 using BankingProject.Infrastructure;
+using BankingProjectFinal.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BankingProjectFinal.Services
 {
-    public class TransferenciaService
+    public class TransferenciaService : ITransferenciaService
     {
         private readonly ApplicationDbContext _context;
 
@@ -18,26 +19,33 @@ namespace BankingProjectFinal.Services
             _context = context;
         }
 
-        public async Task<Transferencia> crearTransferencia(Transferencia transferencia)
+        public async Task<Transferencia> CrearTransferencia(TransferenciaViewModel transferencia)
         {
+            var cuentaOrigen = new Cuenta { NumeroCuenta = transferencia.CuentaOrigen };
+            var cuentaDestino = new Cuenta { NumeroCuenta = transferencia.CuentaDestino };
+
             var transferenciaCreada = new Transferencia
             {
-                cuentaOrigen = transferencia.cuentaOrigen,
-                cuentaDestino = transferencia.cuentaDestino,
-                montoAPagar = transferencia.montoAPagar,
-                concepto = transferencia.concepto
+                CuentaOrigen = cuentaOrigen,
+                CuentaDestino = cuentaDestino,
+                Monto = transferencia.Monto,
+                Concepto = transferencia.Concepto
 
             };
 
-            var cuentaRecuperada = await _context.Cuentas
-            .Where(x => x.NumeroCuenta == transferenciaCreada.cuentaDestino)
-            .FirstOrDefaultAsync();
+            var cuentaDestinoRecuperada = await _context.Cuentas
+                .Where(x => x.NumeroCuenta == transferenciaCreada.CuentaDestino.NumeroCuenta)
+                .FirstOrDefaultAsync();
 
-            cuentaRecuperada.Balace = cuentaRecuperada.Balace + transferenciaCreada.montoAPagar;
+            var cuentaOrigenRecuperada = await _context.Cuentas
+                .Where(x => x.NumeroCuenta == transferenciaCreada.CuentaOrigen.NumeroCuenta)
+                .FirstOrDefaultAsync();
 
-            _context.Update(cuentaRecuperada);
-            await _context.SaveChangesAsync();
+            cuentaDestinoRecuperada.Balace = cuentaDestinoRecuperada.Balace + transferenciaCreada.Monto;
+            cuentaOrigenRecuperada.Balace = cuentaOrigenRecuperada.Balace - transferenciaCreada.Monto;
 
+            _context.Update(cuentaDestinoRecuperada);
+            _context.Update(cuentaOrigenRecuperada);
 
             _context.Add(transferenciaCreada);
             await _context.SaveChangesAsync();
@@ -45,10 +53,17 @@ namespace BankingProjectFinal.Services
             return transferenciaCreada;
 
         }
+
+        /*Task<Cuenta> getCuentasByUser()
+        {
+
+        }*/
     }
 
     public interface ITransferenciaService : IService
     {
-        Task<Transferencia> crearTransferencia(Transferencia transferencia);
+        Task<Transferencia> CrearTransferencia(TransferenciaViewModel transferencia);
+        //Task<Cuenta> getCuentasByUser();
+
     }
 }
