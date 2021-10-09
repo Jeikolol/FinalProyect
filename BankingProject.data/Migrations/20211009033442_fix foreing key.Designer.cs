@@ -4,14 +4,16 @@ using BankingProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankingProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211009033442_fix foreing key")]
+    partial class fixforeingkey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,12 +112,12 @@ namespace BankingProject.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int?>("UserIdId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserIdId");
 
                     b.ToTable("Cuentas");
                 });
@@ -135,7 +137,7 @@ namespace BankingProject.Migrations
                     b.Property<string>("Comentario")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CuentaId")
+                    b.Property<long?>("CuentaIdId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("Estado")
@@ -148,37 +150,37 @@ namespace BankingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CuentaId");
+                    b.HasIndex("CuentaIdId");
 
                     b.ToTable("Transacciones");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
-                    b.HasOne("BankingProject.Entities.User", "User")
-                        .WithMany("Cuenta")
-                        .HasForeignKey("UserId");
+                    b.HasOne("BankingProject.Entities.User", "UserId")
+                        .WithMany("CuentaId")
+                        .HasForeignKey("UserIdId");
 
-                    b.Navigation("User");
+                    b.Navigation("UserId");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Transaccion", b =>
                 {
-                    b.HasOne("BankingProject.core.Entities.Cuenta", "Cuenta")
+                    b.HasOne("BankingProject.core.Entities.Cuenta", "CuentaId")
                         .WithMany("Transacciones")
-                        .HasForeignKey("CuentaId");
+                        .HasForeignKey("CuentaIdId");
 
-                    b.Navigation("Cuenta");
+                    b.Navigation("CuentaId");
                 });
 
             modelBuilder.Entity("BankingProject.Entities.User", b =>
                 {
-                    b.Navigation("Cuenta");
+                    b.Navigation("CuentaId");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
-                    b.Navigation("Transaccione");
+                    b.Navigation("Transacciones");
                 });
 #pragma warning restore 612, 618
         }

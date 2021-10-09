@@ -21,7 +21,7 @@ namespace BankingProject.data.Repository
 
         public List<Cuenta> ObtenerPorUsuario(int UserId)
         {
-            return _dbContext.Cuentas.ToList().Where(x => x.UserId == UserId).ToList();
+            return _dbContext.Cuentas.ToList().Where(x => x.User.Id == UserId).ToList();
         }
     }
 }
