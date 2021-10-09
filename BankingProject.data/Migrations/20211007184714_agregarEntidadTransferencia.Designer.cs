@@ -4,14 +4,16 @@ using BankingProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankingProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211007184714_agregarEntidadTransferencia")]
+    partial class agregarEntidadTransferencia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,10 +112,15 @@ namespace BankingProject.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int?>("TransferenciaId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TransferenciaId");
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -162,30 +169,32 @@ namespace BankingProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Concepto")
+                    b.Property<string>("concepto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CuentaDestinoId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("cuentaDestino")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CuentaOrigenId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("cuentaOrigen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Monto")
+                    b.Property<decimal>("montoAPagar")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CuentaDestinoId");
-
-                    b.HasIndex("CuentaOrigenId");
 
                     b.ToTable("Transferencias");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
+                    b.HasOne("BankingProject.core.Entities.Transferencia", null)
+                        .WithMany("Cuentas")
+                        .HasForeignKey("TransferenciaId");
+
                     b.HasOne("BankingProject.Entities.User", "User")
                         .WithOne("Cuenta")
                         .HasForeignKey("BankingProject.core.Entities.Cuenta", "UserId");
@@ -202,21 +211,6 @@ namespace BankingProject.Migrations
                     b.Navigation("Cuenta");
                 });
 
-            modelBuilder.Entity("BankingProject.core.Entities.Transferencia", b =>
-                {
-                    b.HasOne("BankingProject.core.Entities.Cuenta", "CuentaDestino")
-                        .WithMany()
-                        .HasForeignKey("CuentaDestinoId");
-
-                    b.HasOne("BankingProject.core.Entities.Cuenta", "CuentaOrigen")
-                        .WithMany()
-                        .HasForeignKey("CuentaOrigenId");
-
-                    b.Navigation("CuentaDestino");
-
-                    b.Navigation("CuentaOrigen");
-                });
-
             modelBuilder.Entity("BankingProject.Entities.User", b =>
                 {
                     b.Navigation("Cuenta");
@@ -225,6 +219,11 @@ namespace BankingProject.Migrations
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
                     b.Navigation("Transacciones");
+                });
+
+            modelBuilder.Entity("BankingProject.core.Entities.Transferencia", b =>
+                {
+                    b.Navigation("Cuentas");
                 });
 #pragma warning restore 612, 618
         }
