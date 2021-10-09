@@ -18,15 +18,14 @@ namespace BankingProjectFinal.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly CuentaService _cuentaService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public List<Cuenta> Cuentas { get; set; }
-        public int userId { get; set; }
+        public List<Cuenta> Cuentas { get; set; }        
 
         public IndexModel(ILogger<IndexModel> logger,CuentaService cuentaService, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _cuentaService = cuentaService;
             _httpContextAccessor = httpContextAccessor;
-            this.userId =int.Parse( _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value);
+            var userId =int.Parse( _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value);
             this.Cuentas = _cuentaService.ObtenerCuentasporUsuario(userId);
         }
 
