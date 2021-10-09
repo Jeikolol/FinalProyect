@@ -14,7 +14,7 @@ namespace BankingProject.core.Entities
         public string NumeroCuenta  { get; set; }        
         public int? UserId { get; set; }
         public User User { get; set; }
-        public List<Transaccion> Transacciones { get; set; }
+        //public List<Transferencia> Transferencias { get; set; }
         [DataType(DataType.Currency)]
         public decimal Balace { get; set; }
         [DataType(DataType.Date)]

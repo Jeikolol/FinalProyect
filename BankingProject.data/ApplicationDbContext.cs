@@ -30,11 +30,11 @@ namespace BankingProject.Data
             builder.Entity<Cuenta>().Property(x => x.Balace).HasDefaultValue(500);
             builder.Entity<Cuenta>().Property(x => x.Id).UseIdentityColumn();
             #endregion
-            #region Tabla Transaccion
-            builder.Entity<Transaccion>().ToTable("Transacciones")
+            #region Tabla Transferencia
+            builder.Entity<Transferencia>().ToTable("Transferencias")
                 .Property(x => x.Fecha)
                 .HasDefaultValueSql("getdate()");
-            builder.Entity<Transaccion>().Property(x => x.Id).UseIdentityColumn();
+            builder.Entity<Transferencia>().Property(x => x.Id).UseIdentityColumn();
             #endregion
             #endregion
         }
@@ -42,8 +42,7 @@ namespace BankingProject.Data
         public DbSet<User> Users { get; set; }
       
         public DbSet<Cuenta> Cuentas { get; set; }
-
-        public DbSet<Transaccion> Transacciones { get; set; }
+        
         public DbSet<Transferencia> Transferencias { get; set; }
 
     }

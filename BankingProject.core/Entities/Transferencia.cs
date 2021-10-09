@@ -19,15 +19,8 @@ namespace BankingProject.core.Entities
         public decimal Monto { get; set; }
         [Required(ErrorMessage = "El concepto es requerido")]
         public string Concepto { get; set; }
-
-        /*public static implicit operator Transferencia(Transferencia v)
-        {
-            throw new NotImplementedException();
-        }*/
-
-        /*public static implicit operator Transferencia(Transferencia v)
-        {
-            throw new NotImplementedException();
-        }*/
+        [DataType(DataType.DateTime)]
+        public DateTime Fecha { get; set; }
+        public bool Estado { get; set; }
     }
 }

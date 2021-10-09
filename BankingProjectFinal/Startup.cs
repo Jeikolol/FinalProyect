@@ -68,7 +68,6 @@ namespace BankingProjectFinal
             //Inyeccion de los repositorios
 
             services.AddSingleton<UserRepository>();
-            services.AddSingleton<TransactionRepository>();
             services.AddSingleton<CuentaRepository>();
         }
 
