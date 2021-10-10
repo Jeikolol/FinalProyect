@@ -11,8 +11,7 @@ namespace BankingProject.core.Entities
         public long Id { get; set; }        
         [MaxLength(10)]
         [RegularExpression(@"\d{10}")]
-        public string NumeroCuenta  { get; set; }        
-        public int? UserId { get; set; }
+        public string NumeroCuenta  { get; set; }                
         public User User { get; set; }
         //public List<Transferencia> Transferencias { get; set; }
         [DataType(DataType.Currency)]

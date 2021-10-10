@@ -1,5 +1,6 @@
 ﻿using BankingProject.core.Entities;
 using BankingProject.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,11 @@ namespace BankingProject.data.Repository
         public Cuenta ObtenerPorNumeroCuenta(string numeroCuenta)
         {
             return _dbContext.Cuentas.ToList().Where(x => x.NumeroCuenta == numeroCuenta).FirstOrDefault();
+        }
+
+        public List<Cuenta> ObtenerPorUsuario(int UserId)
+        {
+            return _dbContext.Cuentas.Include(x=>x.User).Where(x=>x.User.Id==UserId).ToList();
         }
     }
 }

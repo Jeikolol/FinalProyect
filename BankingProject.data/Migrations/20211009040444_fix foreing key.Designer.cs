@@ -4,14 +4,16 @@ using BankingProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankingProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211009040444_fix foreing key")]
+    partial class fixforeingkey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,30 +117,27 @@ namespace BankingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Cuentas");
                 });
 
-            modelBuilder.Entity("BankingProject.core.Entities.Transferencia", b =>
+            modelBuilder.Entity("BankingProject.core.Entities.Transaccion", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Concepto")
-                        .IsRequired()
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Comentario")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CuentaDestinoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CuentaOrigenId")
+                    b.Property<long?>("CuentaId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("Estado")
@@ -149,49 +148,28 @@ namespace BankingProject.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<decimal>("Monto")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CuentaDestinoId");
+                    b.HasIndex("CuentaId");
 
-                    b.HasIndex("CuentaOrigenId");
-
-                    b.ToTable("Transferencias");
+                    b.ToTable("Transacciones");
                 });
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
                     b.HasOne("BankingProject.Entities.User", "User")
-                        .WithOne("Cuenta")
-                        .HasForeignKey("BankingProject.core.Entities.Cuenta", "UserId");
                         .WithMany("Cuenta")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BankingProject.core.Entities.Transferencia", b =>
+            modelBuilder.Entity("BankingProject.core.Entities.Transaccion", b =>
                 {
-                    b.HasOne("BankingProject.core.Entities.Cuenta", "CuentaDestino")
-                        .WithMany()
-                        .HasForeignKey("CuentaDestinoId");
-
-                    b.HasOne("BankingProject.core.Entities.Cuenta", "CuentaOrigen")
-                        .WithMany()
-                        .HasForeignKey("CuentaOrigenId");
                     b.HasOne("BankingProject.core.Entities.Cuenta", "Cuenta")
                         .WithMany("Transacciones")
                         .HasForeignKey("CuentaId");
 
-                    b.Navigation("CuentaDestino");
-
-                    b.Navigation("CuentaOrigen");
-                });
-
-            modelBuilder.Entity("BankingProject.Entities.User", b =>
-                {
                     b.Navigation("Cuenta");
                 });
 
