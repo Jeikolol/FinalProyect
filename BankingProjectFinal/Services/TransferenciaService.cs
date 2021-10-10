@@ -13,44 +13,40 @@ namespace BankingProjectFinal.Services
 {
     public class TransferenciaService : ITransferenciaService
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ISecurityService _securityService;
+        private readonly ApplicationDbContext _context;        
 
         public TransferenciaService(ApplicationDbContext context, ISecurityService securityService)
         {
             _context = context;
-            _securityService = securityService;
         }
 
         public async Task<Transferencia> CrearTransferencia(TransferenciaViewModel transferencia)
         {
-            var cuentaOrigen = new Cuenta { NumeroCuenta = transferencia.CuentaOrigen };
-            var cuentaDestino = new Cuenta { NumeroCuenta = transferencia.CuentaDestino };
+
+
+            var cuentaDestinoRecuperada = await _context.Cuentas
+                .Where(x => x.NumeroCuenta == transferencia.CuentaDestino)
+                .FirstOrDefaultAsync();
+
+            var cuentaOrigenRecuperada = await _context.Cuentas
+                .Where(x => x.NumeroCuenta == transferencia.CuentaOrigen)
+                .FirstOrDefaultAsync();
 
             var transferenciaCreada = new Transferencia
             {
-                CuentaOrigen = cuentaOrigen,
-                CuentaDestino = cuentaDestino,
+                CuentaOrigen = cuentaOrigenRecuperada,
+                CuentaDestino = cuentaDestinoRecuperada,
                 Monto = transferencia.Monto,
                 Concepto = transferencia.Concepto
 
             };
 
-            var cuentaDestinoRecuperada = await _context.Cuentas
-                .Where(x => x.NumeroCuenta == transferenciaCreada.CuentaDestino.NumeroCuenta)
-                .FirstOrDefaultAsync();
-
-            var cuentaOrigenRecuperada = await _context.Cuentas
-                .Where(x => x.NumeroCuenta == transferenciaCreada.CuentaOrigen.NumeroCuenta)
-                .FirstOrDefaultAsync();
-
             cuentaDestinoRecuperada.Balace = cuentaDestinoRecuperada.Balace + transferenciaCreada.Monto;
             cuentaOrigenRecuperada.Balace = cuentaOrigenRecuperada.Balace - transferenciaCreada.Monto;
-
             _context.Update(cuentaDestinoRecuperada);
             _context.Update(cuentaOrigenRecuperada);
 
-            //_context.Add(transferenciaCreada);
+            _context.Add(transferenciaCreada);
             await _context.SaveChangesAsync();
 
             return transferenciaCreada;
