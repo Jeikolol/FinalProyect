@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using AppServices;
 using BankingProject.core.Entities;
 using BankingProject.Data;
 using BankingProjectFinal.Models;
 using BankingProjectFinal.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,30 +18,30 @@ namespace BankingProjectFinal.Pages.Transferencias
 {
     public class TransferenciaModel : BaseModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly ITransferenciaService _transferenciaService;
-        private readonly IMemoryCache _memoryCache;
+        public List<SelectListItem> cuentasUsuario { get; set; }
+
 
         [BindProperty]
         public TransferenciaViewModel Transferencia { get; set; }
 
-        public TransferenciaModel(ApplicationDbContext context, ITransferenciaService transferenciaService, IMemoryCache memoryCache)
+        public TransferenciaModel(ITransferenciaService transferenciaService,CuentaService cuentaService, IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
             _transferenciaService = transferenciaService;
-            _memoryCache = memoryCache;
+            var userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value);
+            var cuentas = cuentaService.ObtenerCuentasporUsuario(userId);           
+            cuentasUsuario = new List<SelectListItem>();
+            foreach (var item in cuentas)
+            {
+                this.cuentasUsuario.Add(new SelectListItem(item.NumeroCuenta, item.NumeroCuenta));
+            }
         }
-
-        //public IActionResult OnGet()
-        //{
-        //    ViewData["listaCuentas"] = new SelectList(_transferenciaService., "id", "listaCuentas");
-        //}
 
         public async Task<IActionResult> OnPostTransferir()
         {
-            var result = await _transferenciaService.CrearTransferencia(this.Transferencia);
+            await _transferenciaService.CrearTransferencia(this.Transferencia);
 
-            ShowNotification("", "", NotificationType.success);
+            ShowNotification("La transferencia fue completada con exito!", "!Completado", NotificationType.success);
 
             return Page();
         }

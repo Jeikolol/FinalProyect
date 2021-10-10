@@ -8,8 +8,8 @@
 <div class="row d-flex justify-content-center">
     <div class="col-6">
         <form method="POST">
-            @Html.LabelFor(m => m.Transferencia.CuentaOrigen, new { @class = "control-label" }):
-            @Html.TextBoxFor(m => m.Transferencia.CuentaOrigen, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Transferencia.CuentaOrigen, new { @class = "control-label" }):            
+            @Html.DropDownListFor(x => x.Transferencia.CuentaOrigen,Model.cuentasUsuario,new {@class="form-control" })
             @Html.LabelFor(m => m.Transferencia.CuentaDestino, new { @class = "control-label" }):
             @Html.TextBoxFor(m => m.Transferencia.CuentaDestino, new { @class = "form-control" })
             @Html.LabelFor(m => m.Transferencia.Monto, new { @class = "control-label" }):
