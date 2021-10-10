@@ -13,7 +13,11 @@
                     <div class="card" style="border-color:orange">
                         <div class="card-body">
                             <div class="col">Cuenta No. @item.NumeroCuenta</div>
-                            <div class="col">Balance: @item.Balace</div>
+                            <div class="col">Balance: @item.Balace</div>                           
+                            <a class="nav-link" href="Historico/Historico?noCuenta=@item.NumeroCuenta">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Cuentas propias</p>
+                            </a>
                         </div>
                     </div>
                 </div>                
@@ -21,3 +25,4 @@
         </div>
     }
 </div>
+<script></script>

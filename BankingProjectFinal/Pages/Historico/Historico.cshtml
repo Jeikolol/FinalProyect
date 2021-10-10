@@ -1,0 +1,40 @@
+﻿@page
+@model BankingProjectFinal.Pages.Historico.HistoricoModel
+@{
+}
+
+
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <h3 class="col-12">Historico de transferencias</h3>
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>                        
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Monto</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.transferencias){
+                    <tr>
+                        <td>@item.CuentaOrigen.NumeroCuenta</td>
+                        <td>@item.CuentaDestino.NumeroCuenta</td>
+                        @if (item.CuentaOrigen.NumeroCuenta == Model.NoCuenta)
+                        {
+                            <td style="color:red">-@item.Monto</td>
+                        }
+                        else
+                        {
+                            <td style="color:dodgerblue">+@item.Monto</td>
+                        }
+                        <td>@item.Fecha.ToShortDateString()</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
