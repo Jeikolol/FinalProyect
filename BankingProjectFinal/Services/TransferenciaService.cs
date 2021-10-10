@@ -1,6 +1,7 @@
 ﻿using BankingProject.core.Entities;
 using BankingProject.Data;
 using BankingProject.Infrastructure;
+using BankingProject.Services;
 using BankingProjectFinal.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +14,12 @@ namespace BankingProjectFinal.Services
     public class TransferenciaService : ITransferenciaService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ISecurityService _securityService;
 
-        public TransferenciaService(ApplicationDbContext context)
+        public TransferenciaService(ApplicationDbContext context, ISecurityService securityService)
         {
             _context = context;
+            _securityService = securityService;
         }
 
         public async Task<Transferencia> CrearTransferencia(TransferenciaViewModel transferencia)
@@ -47,7 +50,7 @@ namespace BankingProjectFinal.Services
             _context.Update(cuentaDestinoRecuperada);
             _context.Update(cuentaOrigenRecuperada);
 
-            _context.Add(transferenciaCreada);
+            //_context.Add(transferenciaCreada);
             await _context.SaveChangesAsync();
 
             return transferenciaCreada;
@@ -56,7 +59,6 @@ namespace BankingProjectFinal.Services
 
         /*Task<Cuenta> getCuentasByUser()
         {
-
         }*/
     }
 
