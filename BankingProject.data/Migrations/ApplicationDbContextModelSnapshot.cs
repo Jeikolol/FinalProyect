@@ -163,9 +163,7 @@ namespace BankingProject.Migrations
 
             modelBuilder.Entity("BankingProject.core.Entities.Cuenta", b =>
                 {
-                    b.HasOne("BankingProject.Entities.User", "User")
-                        .WithOne("Cuenta")
-                        .HasForeignKey("BankingProject.core.Entities.Cuenta", "UserId");
+                    b.HasOne("BankingProject.Entities.User", "User")                        
                         .WithMany("Cuenta")
                         .HasForeignKey("UserId");
 
