@@ -70,9 +70,11 @@ namespace BankingProjectFinal
 
             services.AddSingleton<UserRepository>();
             services.AddSingleton<CuentaRepository>();
+            services.AddSingleton<TransferenciaRepository>();
 
             //Servicios
             services.AddSingleton<CuentaService>();
+            services.AddSingleton<TransferenciaService>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
