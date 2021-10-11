@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BankingProjectFinal.Pages.Security;
 using BankingProjectFinal.Models;
+using BankingProject.core.Entities;
+using System.Collections.Generic;
 
 namespace BankingProject.Services
 {
@@ -22,6 +24,18 @@ namespace BankingProject.Services
 
         public async Task<User> CreateUserAsync(RegisterViewModel parameter)
         {
+            string numeroCuenta = "";
+            Random random = new();
+            for (int i = 0; i < 10; i++)
+            {
+                numeroCuenta += random.Next(0, 9).ToString();
+            }
+
+            var cuenta = new Cuenta()
+            {
+                NumeroCuenta = numeroCuenta,
+                Balace = 500
+            };
             var userToCreate = new User
             {
                 Correo = parameter.Email,
@@ -33,7 +47,8 @@ namespace BankingProject.Services
                 Telefono = parameter.Telefono,
                 Celular = parameter.Celular,
                 FechaCreacion = DateTime.UtcNow,
-                Activo = true
+                Activo = true,
+                Cuenta=new List<Cuenta>() {cuenta}
             };
 
             Database.Add(userToCreate);

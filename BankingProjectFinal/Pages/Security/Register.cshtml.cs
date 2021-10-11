@@ -43,12 +43,8 @@ namespace BankingProjectFinal.Pages.Security
                 var resultUser = await _securityService.CreateUserAsync(this.Register);                
                 if (resultUser != null)
                 {
-                    var resultCuenta = _cuentaService.CrearCuenta(resultUser);
-                    if (resultCuenta!=null)
-                    {
-                        ShowNotification("Usuario Registrado Correctamente.", "Mantenimiento de Usuarios", NotificationType.success);
-                        return RedirectToPage("/Security/Login");
-                    }
+                    ShowNotification("Usuario Registrado Correctamente.", "Mantenimiento de Usuarios", NotificationType.success);
+                    return RedirectToPage("/Security/Login");                    
                 }
             }
 
