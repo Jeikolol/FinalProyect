@@ -41,8 +41,8 @@ namespace BankingProjectFinal.Services
 
             };
 
-            cuentaDestinoRecuperada.Balace = cuentaDestinoRecuperada.Balace + transferenciaCreada.Monto;
-            cuentaOrigenRecuperada.Balace = cuentaOrigenRecuperada.Balace - transferenciaCreada.Monto;
+            cuentaDestinoRecuperada.Balace += transferenciaCreada.Monto;
+            cuentaOrigenRecuperada.Balace -= transferenciaCreada.Monto;
             _context.Update(cuentaDestinoRecuperada);
             _context.Update(cuentaOrigenRecuperada);
 

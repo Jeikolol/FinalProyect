@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using AppServices;
 using BankingProject.core.Entities;
 using BankingProject.Services;
 using BankingProjectFinal.Helpers;
@@ -14,10 +15,12 @@ namespace BankingProjectFinal.Pages.Security
     public class RegisterModel : BaseModel
     {
         private readonly ISecurityService _securityService;
+        private readonly CuentaService _cuentaService;
 
-        public RegisterModel(ISecurityService securityService)
+        public RegisterModel(ISecurityService securityService,CuentaService cuentaService)
         {
             _securityService = securityService;
+            _cuentaService = cuentaService;
         }
 
         [BindProperty]
@@ -37,12 +40,15 @@ namespace BankingProjectFinal.Pages.Security
                     return Page();
                 }
 
-                var result = await _securityService.CreateUserAsync(this.Register);
-
-                if (result != null)
+                var resultUser = await _securityService.CreateUserAsync(this.Register);                
+                if (resultUser != null)
                 {
-                    ShowNotification("Usuario Registrado Correctamente.", "Mantenimiento de Usuarios", NotificationType.success);
-                    return RedirectToPage("/Security/Login");
+                    var resultCuenta = _cuentaService.CrearCuenta(resultUser);
+                    if (resultCuenta!=null)
+                    {
+                        ShowNotification("Usuario Registrado Correctamente.", "Mantenimiento de Usuarios", NotificationType.success);
+                        return RedirectToPage("/Security/Login");
+                    }
                 }
             }
 
