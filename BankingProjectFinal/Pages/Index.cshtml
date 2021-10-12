@@ -4,24 +4,41 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="container" >
-    @foreach (var item in Model.Cuentas)
-    {
-        <div class="container" style="margin-top: 1%">
-            <div class="d-flex justify-content-center">
-                <div class="row">
-                    <div class="card" style="border-color:orange">
-                        <div class="card-body">
-                            <div class="col">Cuenta No. @item.NumeroCuenta</div>
-                            <div class="col">Balance: @item.Balace</div>                           
-                            <a class="nav-link" href="Historico/Historico?noCuenta=@item.NumeroCuenta">                                
-                                <p>Historico Transferencias</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>                
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <h1 class="text-center font-bold">Mis Cuentas</h1>
             </div>
         </div>
-    }
-</div>
-<script></script>
+    </div><!-- /.container-fluid -->
+</section>
+
+@foreach (var item in Model.Cuentas)
+{
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h4>Balance: @item.Balace</h4>
+
+                            <p>Cuenta No. @item.NumeroCuenta</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-money-bill-alt"></i>
+                        </div>
+                        <a href="Historico/Historico?noCuenta=@item.NumeroCuenta" class="small-box-footer">
+                            Historico Transferencias <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- ./col -->
+               
+            </div>
+        </div>
+    </section>
+}
