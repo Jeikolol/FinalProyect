@@ -8,6 +8,7 @@ using BankingProject.core.Entities;
 using BankingProject.Data;
 using BankingProjectFinal.Models;
 using BankingProjectFinal.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,6 +45,14 @@ namespace BankingProjectFinal.Pages.Transferencias
             ShowNotification("La transferencia fue completada con exito!", "!Completado", NotificationType.success);
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostLogOut()
+        {
+
+            await HttpContext.SignOutAsync();
+
+            return RedirectToPage("/Security/Login", "Login");
         }
     }
 }
