@@ -29,11 +29,12 @@ namespace BankingProjectFinal.Pages
         public void OnGet()
         {      
         }
-        public async Task<IActionResult> OnPost() {
+
+        public async Task<IActionResult> OnPostLogOut() {
 
             await HttpContext.SignOutAsync();
 
-            return RedirectToPage("./Security/Login", "Login");
+            return RedirectToPage("/Security/Login", "Login");
         }
     }
 }
