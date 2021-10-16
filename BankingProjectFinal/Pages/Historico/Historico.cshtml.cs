@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppServices;
 using BankingProject.core.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -22,6 +23,13 @@ namespace BankingProjectFinal.Pages.Historico
         {
             this.NoCuenta = noCuenta;
             this.transferencias = this._transferenciaService.ObtenerTransferenciasPorCuenta(noCuenta);
+        }
+
+        public async Task<IActionResult> OnPostLogOut()
+        {
+            await HttpContext.SignOutAsync();
+
+            return RedirectToPage("/Security/Login", "Login");
         }
     }
 }

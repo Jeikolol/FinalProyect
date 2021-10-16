@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using BankingProject.core.Entities
-@model IndexModel
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -97,8 +96,10 @@
         </div>
         <!-- /.sidebar -->
         <div class="sidebar-custom">
-            <form method="post" asp-page="Index" asp-page-handler="LogOut">
-                <button class="btn btn-secondary hide-on-collapse pos-right" type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</button>
+            <form method="post" asp-page-handler="LogOut">
+                <button class="btn btn-secondary hide-on-collapse pos-right" id="logoutButton" type="submit">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesion
+                </button>
             </form>
         </div>
     </aside>
