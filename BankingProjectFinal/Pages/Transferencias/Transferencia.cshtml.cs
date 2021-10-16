@@ -25,7 +25,7 @@ namespace BankingProjectFinal.Pages.Transferencias
         [BindProperty]
         public TransferenciaViewModel Transferencia { get; set; }
 
-        public TransferenciaModel(ITransferenciaService transferenciaService,CuentaService cuentaService, IHttpContextAccessor httpContextAccessor)
+        public TransferenciaModel(ITransferenciaService transferenciaService, CuentaService cuentaService, IHttpContextAccessor httpContextAccessor)
         {
             _transferenciaService = transferenciaService;
             var userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value);
