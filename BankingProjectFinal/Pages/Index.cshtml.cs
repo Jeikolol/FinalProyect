@@ -15,19 +15,20 @@ namespace BankingProjectFinal.Pages
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly CuentaService _cuentaService;        
+        private readonly CuentaService _cuentaService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public List<Cuenta> Cuentas { get; set; }        
 
         public IndexModel(CuentaService cuentaService, IHttpContextAccessor httpContextAccessor)
         {
-  
-            _cuentaService = cuentaService;
-            var userId =int.Parse( httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value);
-            this.Cuentas = _cuentaService.ObtenerCuentasporUsuario(userId);
+            _httpContextAccessor = httpContextAccessor;
+            _cuentaService = cuentaService;            
         }
 
         public void OnGet()
-        {      
+        {
+            var userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value);
+            this.Cuentas = _cuentaService.ObtenerCuentasporUsuario(userId);
         }
 
         public async Task<IActionResult> OnPostLogOut() {

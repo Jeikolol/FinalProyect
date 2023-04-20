@@ -40,15 +40,14 @@ namespace BankingProjectFinal.Services
                 Concepto = transferencia.Concepto
 
             };
+            _context.Add(transferenciaCreada);
+            await _context.SaveChangesAsync();
 
             cuentaDestinoRecuperada.Balace += transferenciaCreada.Monto;
             cuentaOrigenRecuperada.Balace -= transferenciaCreada.Monto;
             _context.Update(cuentaDestinoRecuperada);
             _context.Update(cuentaOrigenRecuperada);
-
-            _context.Add(transferenciaCreada);
             await _context.SaveChangesAsync();
-
             return transferenciaCreada;
 
         }

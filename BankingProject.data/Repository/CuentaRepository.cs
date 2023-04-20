@@ -22,7 +22,8 @@ namespace BankingProject.data.Repository
 
         public List<Cuenta> ObtenerPorUsuario(int UserId)
         {
-            return _dbContext.Cuentas.Include(x=>x.User).Where(x=>x.User.Id==UserId).ToList();
+            var cuentas= _dbContext.Cuentas.Include(x=>x.User).Where(x=>x.User.Id==UserId).ToList();
+            return cuentas;
         }
     }
 }
